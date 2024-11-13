@@ -1,0 +1,16 @@
+# 本地存放路径
+SAVE_PATH = ""
+
+# NOTION API
+NOTION_API_KEY = ""
+DATABASE_ID = ""
+
+# IMGUR图床API
+IMGUR_CLIENT_ID = ""
+
+# 代理
+PROXY = ""
+
+# LLM API
+BAILIAN_API = ""
+
