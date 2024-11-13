@@ -3,6 +3,8 @@
 无论在教室、寝室、食堂或是厕所，掏出手机即可快速浏览所需领域论文。
 **一天读100篇论文不是梦~**
 ![93e721375696577fec4481d7bd32fcc](https://github.com/user-attachments/assets/60e2a88f-667e-4d7d-84d4-64444d314598)
+![cbe72cb38c2e83c64f5bd71bfb269ba](https://github.com/user-attachments/assets/f2672f07-2eae-49c7-997a-8499a68db6bc)
+
 
 ## Environment
 * Python3
