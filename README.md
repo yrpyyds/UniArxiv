@@ -2,7 +2,8 @@
 本repo旨在利用该大语言模型快速检索相关领域论文，总结并上传至notion，多端通用。同时也可选择本地保存，会额外提取PDF中重要内容的缩略图（测试阶段）。
 无论在教室、寝室、食堂或是厕所，掏出手机即可快速浏览所需领域论文。
 **一天读100篇论文不是梦~**
-![1](https://github.com/user-attachments/assets/1a41e7d5-4458-4edb-8a28-a2eecf74c8d0)
+![image](https://github.com/user-attachments/assets/1ea23d67-7d4e-44e0-80b0-6fa7568d490d)
+
 
 
 ## Environment
