@@ -2,6 +2,8 @@
 本repo旨在利用该大语言模型快速检索相关领域论文，总结并上传至notion，多端通用。同时也可选择本地保存，会额外提取PDF中重要内容的缩略图（测试阶段）。
 无论在教室、寝室、食堂或是厕所，掏出手机即可快速浏览所需领域论文。
 **一天读100篇论文不是梦~**
+![93e721375696577fec4481d7bd32fcc](https://github.com/user-attachments/assets/60e2a88f-667e-4d7d-84d4-64444d314598)
+
 ## Environment
 * Python3
 * gradio, beautifulsoup4, lxml, openai, pymupdf
