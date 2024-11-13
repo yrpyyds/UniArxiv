@@ -1,11 +1,10 @@
-# 基于gradio的论文检索工具
+# AI论文检索工具
 本repo旨在利用该大语言模型快速检索相关领域论文，总结并上传至notion，多端通用。同时也可选择本地保存，会额外提取PDF中重要内容的缩略图（测试阶段）。
 无论在教室、寝室、食堂或是厕所，掏出手机即可快速浏览所需领域论文。
 **一天读100篇论文不是梦~**
 ## Environment
 * Python3
-* gradio==3.38.0
-* beautifulsoup4, lxml, openai, pymupdf
+* gradio, beautifulsoup4, lxml, openai, pymupdf
 
 ## 所需接口
 **以下用到的接口均免费，可自行注册。注册后可添加进config中的user_info_config.py**
