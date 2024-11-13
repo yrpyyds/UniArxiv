@@ -9,9 +9,9 @@
 
 ## 所需接口
 **以下用到的接口均免费，可自行注册。注册后可添加进config中的user_info_config.py**
-* **imgur api** 自行注册imgur，并获取api，用于上传图像并转发至notion。
-* **百炼api** 自行注册阿里的百炼，并获取api，提供N个大模型，每个都有100W个token。可在llm_model文件中选择所需大模型，默认为qwen-plus
-* **NOTION api** 自行注册notion并获取api及database api，一款好用的多端在线笔记软件
+* **imgur api** 注册imgur，并获取api，用于上传图像并转发至notion。
+* **百炼api** 注册阿里的百炼，并获取api，提供N个大模型，每个都有100W个token。可在llm_model文件中选择所需大模型，默认为qwen-plus
+* **NOTION api** 注册notion并获取api及database api，一款好用的多端在线笔记软件
 
 ## 使用方法
 * 可以直接启用，在GUI界面中修改配置信息(较繁琐，且每次使用启用都要填写，不推荐)
