@@ -18,3 +18,5 @@
 * 首次使用可以对config中的serch_config.py和user_info_config.py进行修改，再启动GUI界面(推荐)
 * 可以通过在llm_model添加以访问更多大模型，目前默认为百炼(免费)
 
+## 支持作者
+给篇一作吧~
