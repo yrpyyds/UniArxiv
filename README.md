@@ -14,8 +14,8 @@
 * **NOTION api** 注册notion并获取api及database api，一款好用的多端在线笔记软件
 
 ## 使用方法
-* 可以直接启用，在GUI界面中修改配置信息(较繁琐，且每次使用启用都要填写，不推荐)
-* 首次使用可以对config中的serch_config.py和user_info_config.py进行修改，再启动GUI界面(推荐)
+* 可以直接启用，在GUI界面中修改配置信息(较繁琐，且每次使用启用都要填写，**不推荐**)
+* 首次使用可以对config中的serch_config.py和user_info_config.py进行修改，再启动GUI界面(**推荐**)
 * 可以通过在llm_model添加以访问更多大模型，目前默认为百炼(免费)
 * 如有公网IP或内网穿透，可以在launch中映射
 
