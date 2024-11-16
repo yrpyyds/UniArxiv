@@ -3,6 +3,7 @@ import time
 from .log import add_log
 import os
 from io import BytesIO
+from notion_client import Client
 
 def upload_image_to_imgur(image_content,imgmur_client_id,retries=3, delay=1):
     """上传本地图片到 Imgur 并获取 URL"""
@@ -128,3 +129,24 @@ def post_notion(notion_token, database_id, title, arxiv_id, conclusion, all_text
         except Exception as e:
             add_log(f"An error occurred: {e}")
             break
+
+def get_notion_arxiv_ids(notion_token,database_id):
+    # 初始化 Notion 客户端
+    notion = Client(auth=notion_token)
+    # 查询数据库内容
+    query_result = notion.databases.query(database_id=database_id)
+
+    arxiv_ids = []
+    for page in query_result.get("results", []):
+        # 获取每页的 "Arxiv ID" 属性值
+        properties = page.get("properties", {})
+        arxiv_id_property = properties.get("Arxiv ID", {})
+        
+        if arxiv_id_property.get("type") == "rich_text":
+            arxiv_id = "".join([text.get("text", {}).get("content", "") 
+                                for text in arxiv_id_property.get("rich_text", [])])
+            arxiv_ids.append(arxiv_id)
+    
+    add_log(f"从Notion获取到{len(arxiv_ids)}个已有的arXiv ID")
+    
+    return arxiv_ids

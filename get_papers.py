@@ -16,6 +16,7 @@ def get_papers(domain, sub_domain, size, start_page, keyword, save_path, save_fl
         if notion_token is None or notion_database_id is None:
             add_log("notion_token and notion_database_id must be provided if notion_flag is True")
             raise ValueError("notion_token and notion_database_id must be provided if notion_flag is True")
+        notion_arxiv_ids = get_notion_arxiv_ids(notion_token, notion_database_id)
         
     if save_flag:
         if save_path is None:
@@ -55,6 +56,11 @@ def get_papers(domain, sub_domain, size, start_page, keyword, save_path, save_fl
                 raise e
 
     for i in range(len(arxiv_papers)):
+        if notion_flag:
+            if arxiv_papers[i]['pdf_link'].split('/')[-1] in notion_arxiv_ids:
+                add_log('-' * 100)
+                add_log(f"第{i+1}篇文章{arxiv_papers[i]['title']}已存在，跳过")
+                continue
         # time.sleep(0.5) # 百炼延时防频繁
         use_proxy(False, proxy_url)
         add_log(f"为访问百炼,代理已关闭")
