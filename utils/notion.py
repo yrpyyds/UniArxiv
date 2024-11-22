@@ -131,22 +131,30 @@ def post_notion(notion_token, database_id, title, arxiv_id, conclusion, all_text
             break
 
 def get_notion_arxiv_ids(notion_token,database_id):
+    add_log(f"开始获取notion已有论文")
     # 初始化 Notion 客户端
     notion = Client(auth=notion_token)
-    # 查询数据库内容
-    query_result = notion.databases.query(database_id=database_id)
 
     arxiv_ids = []
-    for page in query_result.get("results", []):
-        # 获取每页的 "Arxiv ID" 属性值
-        properties = page.get("properties", {})
-        arxiv_id_property = properties.get("Arxiv ID", {})
-        
-        if arxiv_id_property.get("type") == "rich_text":
-            arxiv_id = "".join([text.get("text", {}).get("content", "") 
-                                for text in arxiv_id_property.get("rich_text", [])])
-            arxiv_ids.append(arxiv_id)
-    
+    start_cursor = None  # 初始分页游标
+    while True:
+        # 查询数据库内容，支持分页
+        query_result = notion.databases.query(
+            database_id=database_id,
+            start_cursor=start_cursor,
+        )
+        for page in query_result.get("results", []):
+            # 获取每页的 "Arxiv ID" 属性值
+            properties = page.get("properties", {})
+            arxiv_id_property = properties.get("Arxiv ID", {})
+            
+            if arxiv_id_property.get("type") == "rich_text":
+                arxiv_id = "".join([text.get("text", {}).get("content", "") 
+                                    for text in arxiv_id_property.get("rich_text", [])])
+                arxiv_ids.append(arxiv_id)
+        if not query_result.get("has_more"):
+            break
+        start_cursor = query_result.get("next_cursor")
     add_log(f"从Notion获取到{len(arxiv_ids)}个已有的arXiv ID")
     
     return arxiv_ids
