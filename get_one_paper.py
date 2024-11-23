@@ -3,7 +3,7 @@ from utils import *
 
 from llm_model import BAILIAN
 
-def get_one_paper(id_key, save_path, save_flag, proxy_url, api_key, system_role, system_role_english, notion_flag, notion_token, notion_database_id, imgmur_client_id, retries=5, delay=0.5):
+def get_one_paper(id_key, save_path, save_flag, proxy_url, api_key, system_role, system_role_english, notion_flag, notion_token, notion_database_id, image_bed, client_id, retries=5, delay=0.5):
     add_log("开始获取论文")
     llm = BAILIAN(api_key = api_key,system_role = system_role, system_role_english = system_role_english)
     retries = int(retries)
@@ -105,7 +105,10 @@ def get_one_paper(id_key, save_path, save_flag, proxy_url, api_key, system_role,
             use_proxy(True, proxy_url)
             add_log(f"为访问方法图,代理已开启")
             img_content = all_text.findAll('img')
-            for j, img in enumerate(img_content):
+            add_log(f"共找到{len(img_content)}张方法图")
+            img_num = len(img_content) if len(img_content) < MAX_IMG_NUM else MAX_IMG_NUM #TODO 最大获取图像数量
+            add_log(f"将获取{img_num}张方法图")
+            for j, img in enumerate(img_content[:img_num]):
                 url_id = id_key
                 arxiv_html_url = arixv_base_html_url + url_id
                 img_url = arxiv_html_url + '/' + img_content[j]['src']
@@ -140,7 +143,7 @@ def get_one_paper(id_key, save_path, save_flag, proxy_url, api_key, system_role,
             add_log(f"开始发送Notion")
             use_proxy(True, proxy_url)
             time.sleep(1)
-            post_notion(notion_token,notion_database_id,title,id_key,ai_conclusion,ai_all_text,ai_abstract,img_list,imgmur_client_id)
+            post_notion(notion_token,notion_database_id,title,id_key,ai_conclusion,ai_all_text,ai_abstract,img_list,image_bed,client_id)
 
         if save_flag and os.path.exists(save_path) and has_pdf:
             add_log(f"开始提取可能存在结构图的页码")

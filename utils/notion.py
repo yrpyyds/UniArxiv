@@ -17,20 +17,51 @@ def upload_image_to_imgur(image_content,imgmur_client_id,retries=3, delay=1):
             response.raise_for_status()
             return response.json()["data"]["link"]
         except requests.exceptions.RequestException as e:
-            retrie += 1
             if retrie <= retries:
-                add_log(f"上传到 Imgur 失败，重试次数：{retrie}")
+                add_log(f"上传到 Imgur 失败，正在重试，剩余重试次数：{retries}")
                 time.sleep(delay)
                 return upload_image_to_imgur(image_content, imgmur_client_id, retries - 1, delay * 2)
             else:
-                add_log(f"上传到 Imgur 失败，重试次数：{retries}，放弃上传")
+                add_log(f"上传到 Imgur 失败，放弃上传")
                 return None
 
-def post_notion(notion_token, database_id, title, arxiv_id, conclusion, all_text, ai_abstract, img_list, imgmur_client_id, retries=3 ,delay=1):
+def upload_image_to_smms(image_content, smms_client_id, retries=3, delay=1):
+    """上传本地图片到 SM.MS 并获取 URL"""
+    retrie = 0
+    smms_headers = {'Authorization': smms_client_id}
+    
+    data = {"smfile": BytesIO(image_content)}
+    while True:
+        try:
+            response = requests.post('https://sm.ms/api/v2/upload', headers=smms_headers, files=data)
+            response.raise_for_status()
+            response = response.json()
+            if response["success"]:
+                return response["data"]["url"]
+            else:
+                try:
+                    return response["images"]
+                except:
+                    add_log(f"上传到 SM.MS 失败，返回结果：{response['message']}")
+                    return None
+        except requests.exceptions.RequestException as e:
+            if retrie <= retries:
+                add_log(f"上传到 SM.MS 失败，正在重试，剩余重试次数：{retries}")
+                time.sleep(delay)
+                return upload_image_to_smms(image_content, smms_client_id, retries - 1, delay * 2)
+            else:
+                add_log(f"上传到 SM.MS 失败，放弃上传")
+                return None
+
+def post_notion(notion_token, database_id, title, arxiv_id, conclusion, all_text, ai_abstract, img_list, image_bed, client_id, retries=3 ,delay=1):
+    if image_bed == "Imgur":
+        upload_image = upload_image_to_imgur
+    elif image_bed == "SM.MS":
+        upload_image = upload_image_to_smms
     image_urls = []
     if img_list:     
         for j,img_file in enumerate(img_list):
-            img_url = upload_image_to_imgur(img_file,imgmur_client_id)
+            img_url = upload_image(img_file,client_id)
             # time.sleep(1)
             if img_url:
                 image_urls.append(img_url)

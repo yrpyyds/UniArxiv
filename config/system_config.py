@@ -36,6 +36,7 @@ for method_key_word in METHOD_KEYWORDS:
 # 不安全符号
 UNSAFE_SIGN = [':', '?', '/', '<', '>', '*', '|', '"']
 
+MAX_IMG_NUM = 5 # TODO 最大图片数量 尚未添加gradio
 DELAY = 0.5 # 连接延时
 RETRIES = 3 # 重试次数
 START_PAGE = 0 # 起始页码

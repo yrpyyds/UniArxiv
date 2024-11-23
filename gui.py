@@ -8,6 +8,14 @@ from utils.log import get_logs
 def update_log():
     return get_logs()
 
+def update_client_id(picture_bed_choice):
+    # 根据选择更新 Client ID 的值
+    if picture_bed_choice == "Imgur":
+        return IMGUR_CLIENT_ID
+    elif picture_bed_choice == "SM.MS":
+        return SMMS_CLIENT_ID
+    return ""
+
 with gr.Blocks(title="文献检索") as demo:
     gr.Markdown("<center><strong><p style='font-size: 32px;'>文献检索</p></strong></center>")
     gr.Markdown("**GitHub地址**: [GitHub](https://github.com/yrpyyds/UniArxiv)")
@@ -31,7 +39,16 @@ with gr.Blocks(title="文献检索") as demo:
         notion_flag = gr.Checkbox(label="是否使用Notion", value=True, interactive=True)
         notion_token = gr.Textbox(label="Notion token", value=NOTION_API_KEY, interactive=True)
         dataset_api = gr.Textbox(label="Dataset API", value=DATABASE_ID, interactive=True)
-        imgmur_client_id = gr.Textbox(label="Imgur Client ID", value=IMGUR_CLIENT_ID, interactive=True)
+        picture_bed = gr.Radio(
+            choices=["Imgur", "SM.MS"], 
+            label="图床选择", 
+            value="SM.MS",  # 默认值
+            interactive=True,
+        )
+
+        client_id = gr.Textbox(label="图床Client ID", value=SMMS_CLIENT_ID, interactive=True)
+        picture_bed.change(update_client_id, inputs=picture_bed, outputs=client_id)
+        # imgmur_client_id = gr.Textbox(label="Imgur Client ID", value=IMGUR_CLIENT_ID, interactive=True)
     with gr.Row():
         log = gr.TextArea(label="日志", interactive=False)
         with gr.Column():
@@ -57,11 +74,11 @@ with gr.Blocks(title="文献检索") as demo:
 
     submit.click(get_papers, [domain, sub_domain, per_number,
                  start_page, keyword, save_path, save_flag, proxy, api, system_role, 
-                 system_role_english, notion_flag, notion_token, dataset_api, imgmur_client_id,
+                 system_role_english, notion_flag, notion_token, dataset_api, picture_bed, client_id,
                  retries, delay], [log])
     submit_one_arxiv.click(get_one_paper, [arxiv_code, save_path, save_flag, 
                                            proxy, api, system_role, system_role_english, 
-                                           notion_flag, notion_token, dataset_api, imgmur_client_id, 
+                                           notion_flag, notion_token, dataset_api, picture_bed, client_id, 
                                            retries, delay], [log])
     demo.load(fn=update_log, outputs=log, every=0.05)
 
