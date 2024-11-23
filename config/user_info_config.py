@@ -8,6 +8,9 @@ DATABASE_ID = ""
 # IMGUR图床API
 IMGUR_CLIENT_ID = ""
 
+# SM.MS图床API
+SMMS_CLIENT_ID = ""
+
 # 代理
 PROXY = ""
 
