@@ -18,8 +18,14 @@ with gr.Blocks(title="文献检索") as demo:
             label="子领域", value='Image Super Resolution', interactive=True)
         keyword = gr.Textbox(label="关键词(;分隔)", interactive=True)
     with gr.Row():
-        per_number = gr.Number(label="单次获取数量", value=PER_PAPER_NUM, minimum=100, interactive=True)
-        start_page = gr.Number(label="起始页数", value=START_PAGE, interactive=True)
+        per_number = gr.Radio(
+            choices=[25, 50, 100, 200], 
+            label="单次获取数量", 
+            value=100,  # 默认值
+            interactive=True,
+        )
+        # per_number.change(lambda x: x, per_number)
+        start_page = gr.Number(label="起始页数(从0开始)", value=START_PAGE, interactive=True)
         submit = gr.Button("获取大批文献")
     with gr.Row():
         notion_flag = gr.Checkbox(label="是否使用Notion", value=True, interactive=True)

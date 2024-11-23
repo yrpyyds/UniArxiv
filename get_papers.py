@@ -29,6 +29,7 @@ def get_papers(domain, sub_domain, size, start_page, keyword, save_path, save_fl
     add_log("已开启代理访问arxiv")
 
     size = int(size)
+    start_page = start_page * size
     sleep_time = float(delay)
     retries = int(retries)
     args = keyword.split(';')
