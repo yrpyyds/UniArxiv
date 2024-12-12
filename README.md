@@ -12,9 +12,12 @@
 
 ## 所需接口
 **以下用到的接口均免费，可自行注册。注册后可添加进config中的user_info_config.py**
-* **imgur api** 注册imgur，并获取api，用于上传图像并转发至notion。
+* ~~**imgur api** 注册imgur，并获取api，用于上传图像并转发至notion。(上传存在限制，强烈不推荐，可使用SM.MS)~~
+* **SM.MS api** 注册SM.MS，并获取api，用于上传图像并转发至notion
 * **百炼api** 注册阿里的百炼，并获取api，提供N个大模型，每个都有100W个token。可在llm_model文件中选择所需大模型，默认为qwen-plus
 * **NOTION api** 注册notion并获取api及database api，一款好用的多端在线笔记软件
+* **NOTION database补充说明** 需提前将Notion database的属性更改为如下形式。(如需其他名称属性，可在notion.py中自行修改notion_data)
+![image](https://github.com/user-attachments/assets/9395478e-0ca5-4f9a-b935-3e94876e3991)
 
 ## 使用方法
 * 可以直接启用，在GUI界面中修改配置信息(较繁琐，且每次使用启用都要填写，**不推荐**)
